@@ -1,49 +1,50 @@
-import {createContext, useContext, useState, useEffect} from "react";
-import {login, register, getProfil} from "../services/auth";
+import { createContext, useContext, useState, useEffect } from "react";
+import authService from "../services/auth"; // ✅ default import
 
 const AuthContext = createContext();
 
-const AuthProvider = ({children}) => {
-    const [user, setUser] = useState(null);
-    const [loading, setloading] = useState(true);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(  loaduser = async() => {
-       try{
-        const token = localStorage.getItem('token');
-        if(token){
-           const userData = await getProfil();
-           setUser(userData);          
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          const userData = await authService.getProfile(); // ✅ default object usage
+          setUser(userData);
         }
-       }catch(error){
-        console.log(error);
-       }finally{
-        setloading(false);
-       }
-       loaduser();
-    }, []);
-
-    const signIn = async(credentials) => {
-        try{
-            const {token, user} = await login(credentials);
-            localStorage.setItem('token', token);
-            setUser(user);
-        }catch(error){
-            throw error.response.data;
-        }
+      } catch (error) {
+        console.error("Error loading user:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const signOut = () => {
-        localStorage.removeItem('token');
-        setUser(null);
-    };
+    loadUser();
+  }, []);
 
-    return(
-        <AuthContext.Provider value={{user, loading, signIn, signOut}}>
-            {children}
-        </AuthContext.Provider>
-    );
-    };
- 
-    export const useAuth = () => useContext(AuthContext);
+  const signIn = async (credentials) => {
+    try {
+      const { token, user } = await authService.login(credentials);
+      localStorage.setItem("token", token);
+      setUser(user);
+    } catch (error) {
+      throw error;
+    }
+  };
 
+  const signOut = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
 
+  return (
+    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
