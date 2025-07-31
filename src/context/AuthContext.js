@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import authService from "../services/auth"; // ✅ default import
+import authService from "../services/auth"; 
 
 const AuthContext = createContext();
 
@@ -35,13 +35,23 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const signUp = async (userData) => {
+    try {
+      const { token, user } = await authService.register(userData);
+      localStorage.setItem("token", token);
+      setUser(user);
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const signOut = () => {
     localStorage.removeItem("token");
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signOut, signUp }}>
       {children}
     </AuthContext.Provider>
   );

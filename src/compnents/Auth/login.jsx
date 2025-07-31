@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import '../../App.css';
 
- const Login = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,15 +14,17 @@ import '../../App.css';
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signIn({ email, password });
+      const res = await signIn({ email, password });
+      console.log("Login success:", res);
       navigate("/dashboard");
-    } catch (error) {
-      setError(error.message || "Login failed");
+    } catch (err) {
+      console.error("Login error:", err);
+      setError(err.response?.data?.message || err.message || "Login failed");
     }
   };
 
   return (
-    <Box sx={{ maxWidth: 400, mx: "auto", mt: 5 }}>
+    <Box sx={{ maxWidth: 400, mx: "auto", mt: 20 }}>
       <Typography variant="h4" gutterBottom>
         Login
       </Typography>
@@ -31,7 +33,11 @@ import '../../App.css';
           label="Email"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)} fullWidth margin="normal" required/>
+          onChange={(e) => setEmail(e.target.value)}
+          fullWidth
+          margin="normal"
+          required
+        />
         <TextField
           label="Password"
           type="password"
@@ -46,7 +52,13 @@ import '../../App.css';
             {error}
           </Typography>
         )}
-        <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ mt: 2 }}
+        >
           Login
         </Button>
       </form>
