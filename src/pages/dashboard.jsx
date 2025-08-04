@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {  AppBar, Toolbar, Typography } from "@mui/material";
+import {  Typography } from "@mui/material";
+import EditProduct from '../pages/EditProduct';
 const Button = ({ title, btnColor }) => {
   return (
     <button type="submit" className={btnColor}>
@@ -80,7 +81,7 @@ const ProductTable = ({Productdata}) => {
                 />
               </td>
               <td>
-                <button className="editButton">Edit</button>
+               <Link to={`/editProduct/${item._id}`}><button className="editButton">Edit</button></Link> 
                 <button className="deleteButton">Delete</button>
               </td>
             </tr>

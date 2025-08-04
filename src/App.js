@@ -6,6 +6,7 @@ import Dashboard from "./pages/dashboard";
 import Navigation from "./compnents/Layout/navigation";
 import Register from "./compnents/Auth/register";
 import Home from "./pages/Home";
+import EditProduct from "./pages/EditProduct";
 
 
 
@@ -21,6 +22,7 @@ function App(){
           <Route path="/dashboard" element={<Dashboard />}/>
            <Route path="/Register" element={<Register />}/>
           <Route path="/" element={<Home />}/>
+          <Route path="/editProduct/:id" element={<EditProduct />}/>
 
       </Routes>
       </BrowserRouter>
