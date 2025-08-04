@@ -392,3 +392,225 @@ body {
 .search-btn:active {
   transform: scale(0.95);
 }
+
+.card-container {
+  width: 100%;
+  max-width: 350px;
+  margin: 1rem;
+  display: inline-block;
+  vertical-align: top;
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+/* Fade-in animation on load */
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.custom-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-origin: center;
+}
+
+.custom-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+}
+
+/* Slight zoom on image when card is hovered */
+.custom-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.4s ease-in-out;
+}
+
+.card-body {
+  padding: 16px;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.card-description {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 12px;
+  min-height: 50px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #28a745;
+}
+
+.view-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Glow effect on hover */
+.view-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
+}
+.heading-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+
+.heading-title::after {
+  content: '';
+  width: 60px;
+  height: 4px;
+  background-color: #033468;
+  display: block;
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
+.editButton, .deleteButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+}
+
+.editButton {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.editButton:hover {
+  background-color: #138496;
+  box-shadow: 0 0 8px rgba(23, 162, 184, 0.4);
+}
+
+
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: #c82333;
+  box-shadow: 0 0 8px rgba(220, 53, 69, 0.4);
+}
+
+.product-table {
+  width: 100%;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+  margin-top: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+
+}
+
+.table-header {
+  background-color: #8dbbea;
+  color: #0f08dc;
+  text-align: left;
+}
+
+.table-header th {
+  padding: 14px 16px;
+  font-weight: 600;
+  font-size: 15px;
+  border-bottom: 2px solid #3b0dc4;
+}
+
+.table-body td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #0916c9;
+  font-size: 14px;
+  color: #444;
+  vertical-align: middle;
+}
+
+
+.table-body tr {
+  border-bottom: 1px solid #ddd;
+}
+
+
+.table-body td {
+  padding: 16px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #444;
+}
+
+/* Add hover effect for a nicer UI */
+.table-body tr:hover {
+  background-color: #f9f9f9;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.table-body img {
+  width: 80px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Row Hover */
+.table-body tr:hover {
+  background-color: #f9f9f9;
+  transition: background-color 0.2s ease-in-out;
+}
+
+
+
