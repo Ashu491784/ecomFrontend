@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {  Typography } from "@mui/material";
-import EditProduct from '../pages/EditProduct';
+import { Typography } from "@mui/material";
+
 const Button = ({ title, btnColor }) => {
   return (
     <button type="submit" className={btnColor}>
@@ -9,6 +9,7 @@ const Button = ({ title, btnColor }) => {
     </button>
   );
 };
+
 const TextField = ({ placeholder, type, name, value, handleChange }) => {
   if (type === "file") {
     return (
@@ -24,7 +25,6 @@ const TextField = ({ placeholder, type, name, value, handleChange }) => {
           onChange={handleChange}
           accept="image/*"
         />
-
         {value && typeof value === "object" && (
           <div className="mt-3">
             <img
@@ -53,7 +53,7 @@ const TextField = ({ placeholder, type, name, value, handleChange }) => {
   );
 };
 
-const ProductTable = ({Productdata}) => {
+const ProductTable = ({ Productdata, onDelete }) => {
   return (
     <div className="product-table">
       <table className="table">
@@ -81,17 +81,23 @@ const ProductTable = ({Productdata}) => {
                 />
               </td>
               <td>
-               <Link to={`/editProduct/${item._id}`}><button className="editButton">Edit</button></Link> 
-                <button className="deleteButton">Delete</button>
+                <Link to={`/editProduct/${item._id}`}>
+                  <button className="editButton">Edit</button>
+                </Link>
+                <button
+                  onClick={() => onDelete(item._id)}
+                  className="deleteButton"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  )
+  );
 };
-
 
 const Dashboard = () => {
   const [formData, setFormData] = useState({
@@ -113,16 +119,40 @@ const Dashboard = () => {
         if (!res.ok) {
           throw new Error(data.message || "Something went wrong on the server");
         }
-       setItem(data.items);
-       setLoading(false);
-       console.log(data);
+        setItem(data.items);
+        setLoading(false);
+        console.log(data);
       } catch (err) {
         console.error("Fetching error:", err);
         setError(err.message);
       }
     };
     fetchItems();
-  },[]);
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      if (!window.confirm("Are you sure you want to delete this product?"))
+        return;
+      const res = await fetch(
+        `http://localhost:5000/api/item/delete/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(
+          result.message || "Something went wrong on the server"
+        );
+      }
+      alert(result.message);
+      setItem(items.filter((item) => item._id !== id));
+    } catch (err) {
+      console.error("Delete error:", err);
+      setError(err.message);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -155,8 +185,11 @@ const Dashboard = () => {
 
       alert(result.message);
       setFormData({ title: "", description: "", price: "", image: null });
+
+      // Refresh item list
+      setItem([...items, result.item]);
     } catch (error) {
-      console.error("Error from frontend:", error);
+      console.error("Form submit error:", error);
       alert(`Error: ${error.message}`);
     }
   };
@@ -203,15 +236,26 @@ const Dashboard = () => {
           </form>
         </div>
       </div>
+
       <div className="card mt-4 mb-4">
-      <div className="card-header">
-         <Typography variant="h4"   sx={{flexGrow: 1, fontFamily: 'Poppins', textAlign: 'center', fontWeight: 'bold', color: '#2e11e8ff', mt: 2,}}>
-  All Tea 🍃
-</Typography>
-      </div>
-      <div className="card-body">
-        <ProductTable Productdata={items}/>
-      </div>
+        <div className="card-header">
+          <Typography
+            variant="h4"
+            sx={{
+              flexGrow: 1,
+              fontFamily: "Poppins",
+              textAlign: "center",
+              fontWeight: "bold",
+              color: "#2e11e8ff",
+              mt: 2,
+            }}
+          >
+            All Tea 🍃
+          </Typography>
+        </div>
+        <div className="card-body">
+          <ProductTable Productdata={items} onDelete={handleDelete} />
+        </div>
       </div>
     </div>
   );

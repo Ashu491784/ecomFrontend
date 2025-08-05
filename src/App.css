@@ -610,6 +610,102 @@ body {
   background-color: #f9f9f9;
   transition: background-color 0.2s ease-in-out;
 }
+.mt-20 {
+  margin-top: 5rem;
+}
+
+.edit-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.edit-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.edit-card-header {
+  background: linear-gradient(to right, #b3c5ed, #585e71);
+  padding: 1rem;
+  text-align: center;
+}
+
+.edit-card-title {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.edit-card-body {
+  padding: 2rem;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.btn-edit,
+.btn-cancel {
+  width: 80%;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.btn-edit {
+  background-color: #2563eb;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #6f85cd;
+  transform: scale(1.03);
+}
+
+.btn-cancel {
+  background-color: #ee8c9e;
+  color: #1f2937;
+}
+
+.btn-cancel:hover {
+  background-color: #eb6798;
+  transform: scale(1.03);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-container {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+}
+
 
 
 

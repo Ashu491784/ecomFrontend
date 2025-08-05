@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          const userData = await authService.getProfile(); // ✅ default object usage
+          const userData = await authService.getProfile();
           setUser(userData);
         }
       } catch (error) {

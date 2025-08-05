@@ -8,11 +8,15 @@ import {
   CardContent,
   Box,
   CircularProgress,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 const Home = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchItems = async () => {
     try {
@@ -36,6 +40,10 @@ const Home = () => {
     fetchItems();
   }, []);
 
+  const filteredItems = items.filter((item) =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
@@ -46,7 +54,7 @@ const Home = () => {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
-    
+      {/* Header Section */}
       <Box
         sx={{
           textAlign: "center",
@@ -87,14 +95,33 @@ const Home = () => {
         </Typography>
       </Box>
 
+      {/* 🔍 Search Bar */}
+      <Box className="search-wrapper" sx={{ mb: 4, display: "flex", justifyContent: "center" }}>
+        <TextField
+          className="search-field"
+          placeholder="Search teas..."
+          variant="outlined"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{ width: { xs: "100%", sm: "60%", md: "40%" } }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon  sx={{ color: "#2e7d32" }} />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+
       {/* Tea Grid */}
-      {items.length === 0 ? (
+      {filteredItems.length === 0 ? (
         <Typography variant="h5" align="center" sx={{ mt: 4 }}>
-          No tea items available at the moment.
+          No tea items match your search.
         </Typography>
       ) : (
         <Grid container spacing={4}>
-          {items.map((item) => (
+          {filteredItems.map((item) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>
               <Card
                 sx={{
